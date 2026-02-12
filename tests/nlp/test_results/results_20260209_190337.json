@@ -1,0 +1,1627 @@
+{
+  "timestamp": "20260209_190337",
+  "statistics": {
+    "total": 20,
+    "passed": 14,
+    "failed": 6,
+    "pass_rate": 0.7,
+    "category_stats": {
+      "object_classification_error": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "stage_flag_mismatch": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "number_parsing": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      },
+      "complex_constraints": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "ambiguous_expression": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "unsupported_type": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "location_constraint": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "minimal_input": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "long_input": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      },
+      "special_characters": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      },
+      "mixed_language": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "synonyms": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "negation": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "multiple_objects": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "conflicting_info": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      },
+      "very_specific": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "very_ambiguous": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "stage_combination": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "quantity_constraint": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      },
+      "real_world": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1
+      }
+    },
+    "reclassification_detected": 6,
+    "reclassification_rate": 0.3,
+    "stage_consistency": 20,
+    "stage_consistency_rate": 1.0,
+    "field_accuracy": {
+      "restrict_parent_rooms": {
+        "total": 17,
+        "accurate": 15
+      },
+      "restrict_child_primary": {
+        "total": 6,
+        "accurate": 4
+      },
+      "solve_max_rooms": {
+        "total": 6,
+        "accurate": 6
+      },
+      "solve_large_enabled": {
+        "total": 5,
+        "accurate": 5
+      },
+      "solve_medium_enabled": {
+        "total": 3,
+        "accurate": 3
+      },
+      "solve_small_enabled": {
+        "total": 2,
+        "accurate": 2
+      },
+      "restrict_parent_objs": {
+        "total": 1,
+        "accurate": 1
+      },
+      "restrict_child_secondary": {
+        "total": 2,
+        "accurate": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "test_id": "edge_001",
+      "category": "object_classification_error",
+      "description": "Sink를 restrict_child_primary에 잘못 분류하는 경우",
+      "input": "주방에 싱크대를 배치해줘.",
+      "passed": true,
+      "issues": [
+        "Expected issues detected: Automatically reclassified"
+      ],
+      "warnings": [
+        "Object 'Sink' was in restrict_parent_objs but should be in restrict_child_secondary. Automatically reclassified.",
+        "Auto-inferred parent 'KitchenCounter' for secondary object 'Sink'."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {},
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": [
+          "Sink"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": true
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": [
+          "KitchenCounter"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter"
+        ],
+        "restrict_child_secondary": [
+          "Sink"
+        ],
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_002",
+      "category": "stage_flag_mismatch",
+      "description": "restrict_child_secondary가 있는데 solve_small_enabled=False",
+      "input": "주방에 조리대 위에 음식을 배치하고, 바닥에만 배치해줘.",
+      "passed": true,
+      "issues": [
+        "Expected issues detected: auto-enabled solve_small_enabled"
+      ],
+      "warnings": [
+        "Object 'Cookware' was in restrict_parent_objs but should be in restrict_child_secondary. Automatically reclassified.",
+        "Object 'KitchenCounterItem' was in restrict_child_primary but should be in restrict_child_secondary. Automatically reclassified.",
+        "restrict_child_secondary has objects; auto-enabled solve_small_enabled."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {},
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "Cookware",
+          "KitchenCounter"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounterItem"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": null,
+          "medium": null,
+          "small": null
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": true,
+          "obj_on_support": null
+        },
+        "stage_exclusive": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": [
+          "KitchenCounter"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter"
+        ],
+        "restrict_child_secondary": [
+          "Cookware",
+          "KitchenCounterItem"
+        ],
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_003",
+      "category": "number_parsing",
+      "description": "한국어 숫자 표현 '1개 주방' 파싱",
+      "input": "1개 주방에 조리대를 배치해줘.",
+      "passed": false,
+      "issues": [
+        "restrict_child_primary: restrict_child_primary: Expected ['KitchenCounter'] but got None"
+      ],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_child_primary": false,
+        "solve_max_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_004",
+      "category": "complex_constraints",
+      "description": "여러 방 타입 + 여러 오브젝트 + 위치 제약",
+      "input": "침실과 거실에 침대, 소파, 테이블을 배치하고, 최대 3개 방, 바닥에만 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "solve_max_rooms": true,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Sofa",
+          "Table"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 3,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": true,
+          "obj_on_support": null
+        },
+        "stage_exclusive": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom",
+          "LivingRoom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "LoungeSeating",
+          "Table"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 3,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_005",
+      "category": "ambiguous_expression",
+      "description": "모호한 표현 '적당히 배치해줘'",
+      "input": "침실에 적당히 가구를 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage",
+          "Table",
+          "Desk"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": true,
+          "on_floor_freestanding": true,
+          "on_wall": false,
+          "on_ceiling": false,
+          "side_obj": false,
+          "obj_ontop_obj": true,
+          "obj_on_support": false
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage",
+          "Table",
+          "Desk"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_006",
+      "category": "unsupported_type",
+      "description": "존재하지 않는 방 타입",
+      "input": "게임룸에 게임기를 배치해줘.",
+      "passed": true,
+      "issues": [
+        "Expected issues detected: Invalid object types"
+      ],
+      "warnings": [
+        "Invalid object types in restrict_parent_objs (will be ignored): ['Game']",
+        "Invalid object types in restrict_child_primary (will be ignored): ['Game']"
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "Game"
+        ],
+        "restrict_child_primary": [
+          "Game"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_007",
+      "category": "location_constraint",
+      "description": "복합 위치 제약 '바닥과 벽에만'",
+      "input": "거실에 가구를 바닥과 벽에만 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "LivingRoom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_008",
+      "category": "minimal_input",
+      "description": "매우 짧은 입력",
+      "input": "침실",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": true,
+          "on_floor_freestanding": true,
+          "on_wall": false,
+          "on_ceiling": false,
+          "side_obj": false,
+          "obj_ontop_obj": false,
+          "obj_on_support": false
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_009",
+      "category": "long_input",
+      "description": "여러 문장으로 구성된 긴 설명",
+      "input": "침실에 침대를 배치하고, 옷장도 배치하고, 책상도 배치하고, 의자도 배치하고, 램프도 배치하고, 최대 2개 방을 생성해줘.",
+      "passed": false,
+      "issues": [
+        "restrict_parent_rooms: restrict_parent_rooms: Extra items {'Closet'}"
+      ],
+      "warnings": [
+        "Auto-inferred parent 'SideTable' for secondary object 'Lighting'."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": false,
+        "solve_max_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Wardrobe",
+          "Desk",
+          "Chair",
+          "Table"
+        ],
+        "restrict_child_secondary": [
+          "Lamp"
+        ],
+        "solve_max_rooms": 2,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": true,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom",
+          "Closet"
+        ],
+        "restrict_parent_objs": [
+          "SideTable"
+        ],
+        "restrict_child_primary": [
+          "Bed",
+          "Storage",
+          "Desk",
+          "Chair",
+          "Table",
+          "SideTable"
+        ],
+        "restrict_child_secondary": [
+          "Lighting"
+        ],
+        "solve_max_rooms": 2,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_010",
+      "category": "special_characters",
+      "description": "특수 문자 포함",
+      "input": "주방에 조리대(카운터)를 배치해줘.",
+      "passed": false,
+      "issues": [
+        "restrict_child_primary: restrict_child_primary: Expected ['KitchenCounter'] but got None"
+      ],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_child_primary": false
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_011",
+      "category": "mixed_language",
+      "description": "한국어와 영어 혼용",
+      "input": "bedroom에 침대를 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_012",
+      "category": "synonyms",
+      "description": "동의어 사용 - '싱크' vs '싱크대'",
+      "input": "주방에 조리대와 싱크를 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [
+        "Object 'Sink' was in restrict_parent_objs but should be in restrict_child_secondary. Automatically reclassified.",
+        "Object 'Sink' was in restrict_child_primary but should be in restrict_child_secondary. Automatically reclassified."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_parent_objs": true,
+        "restrict_child_primary": true,
+        "restrict_child_secondary": true
+      },
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "KitchenCounter",
+          "Sink"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter",
+          "Sink"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": true,
+          "obj_on_support": true
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": [
+          "KitchenCounter"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter"
+        ],
+        "restrict_child_secondary": [
+          "Sink"
+        ],
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_013",
+      "category": "negation",
+      "description": "부정 표현 '~없이'",
+      "input": "침실에 침대만 배치하고 다른 가구는 없이 해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_child_primary": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": null,
+          "medium": null,
+          "small": null
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": true,
+          "on_floor_freestanding": false,
+          "on_wall": false,
+          "on_ceiling": false,
+          "side_obj": false,
+          "obj_ontop_obj": false,
+          "obj_on_support": false
+        },
+        "stage_exclusive": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_014",
+      "category": "multiple_objects",
+      "description": "같은 카테고리에 여러 오브젝트",
+      "input": "거실에 소파, 의자, 안락의자를 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [
+        "Object 'LoungeSeating' was in restrict_parent_objs but should be in restrict_child_primary. Automatically reclassified.",
+        "Object 'Chair' was in restrict_parent_objs but should be in restrict_child_primary. Automatically reclassified."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_child_primary": true
+      },
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "LoungeSeating",
+          "Chair"
+        ],
+        "restrict_child_primary": [
+          "LoungeSeating",
+          "Chair"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "LivingRoom"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "LoungeSeating",
+          "Chair"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_015",
+      "category": "conflicting_info",
+      "description": "상충하는 제약사항",
+      "input": "주방에 조리대 위에 싱크대를 배치하고, 바닥에만 배치해줘.",
+      "passed": false,
+      "issues": [
+        "restrict_child_secondary: restrict_child_secondary: Extra items {'Cookware'}"
+      ],
+      "warnings": [
+        "Object 'Cookware' was in restrict_parent_objs but should be in restrict_child_secondary. Automatically reclassified.",
+        "Object 'Sink' was in restrict_parent_objs but should be in restrict_child_secondary. Automatically reclassified.",
+        "Object 'Sink' was in restrict_child_primary but should be in restrict_child_secondary. Automatically reclassified.",
+        "Auto-inferred parent 'KitchenCounter' for secondary object 'Cookware'.",
+        "restrict_child_secondary has objects; auto-enabled solve_small_enabled."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "restrict_child_secondary": false,
+        "solve_large_enabled": true
+      },
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "Cookware",
+          "Sink"
+        ],
+        "restrict_child_primary": [
+          "Sink"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": false,
+          "on_floor_freestanding": false,
+          "on_wall": false,
+          "on_ceiling": false,
+          "side_obj": false,
+          "obj_ontop_obj": true,
+          "obj_on_support": true
+        },
+        "stage_exclusive": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": [
+          "KitchenCounter"
+        ],
+        "restrict_child_primary": [
+          "KitchenCounter"
+        ],
+        "restrict_child_secondary": [
+          "Cookware",
+          "Sink"
+        ],
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_016",
+      "category": "very_specific",
+      "description": "모든 파라미터 명시",
+      "input": "1개 주방에 조리대를 배치하고 조리대 위에 음식을 배치하고, 바닥에만 배치하고, 최대 1개 방을 생성해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "solve_max_rooms": true,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Kitchen"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_017",
+      "category": "very_ambiguous",
+      "description": "최소한의 정보만 포함",
+      "input": "방에 뭔가 배치해줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Furniture"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Furniture"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_018",
+      "category": "stage_combination",
+      "description": "large=True, medium=False, small=True 조합",
+      "input": "거실에 소파를 바닥에 배치하고, 테이블 위에 그릇을 올려줘.",
+      "passed": true,
+      "issues": [],
+      "warnings": [
+        "Object 'LoungeSeating' was in restrict_parent_objs but should be in restrict_child_primary. Automatically reclassified."
+      ],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": true,
+        "solve_large_enabled": true
+      },
+      "reclassification_detected": true,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": [
+          "LoungeSeating",
+          "Table"
+        ],
+        "restrict_child_primary": [
+          "LoungeSeating",
+          "Table"
+        ],
+        "restrict_child_secondary": [
+          "Dishware"
+        ],
+        "solve_max_rooms": null,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": true,
+          "obj_on_support": true
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "LivingRoom"
+        ],
+        "restrict_parent_objs": [
+          "Table"
+        ],
+        "restrict_child_primary": [
+          "LoungeSeating",
+          "Table"
+        ],
+        "restrict_child_secondary": [
+          "Dishware"
+        ],
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_019",
+      "category": "quantity_constraint",
+      "description": "solve_max_rooms = 0 (잘못된 값)",
+      "input": "0개 방을 생성해줘.",
+      "passed": false,
+      "issues": [
+        "Expected issue not detected: solve_max_rooms should be at least 1"
+      ],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "solve_max_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": false,
+        "stage_types": {
+          "on_floor_and_wall": null,
+          "on_floor_freestanding": null,
+          "on_wall": null,
+          "on_ceiling": null,
+          "side_obj": null,
+          "obj_ontop_obj": null,
+          "obj_on_support": null
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": null,
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 1,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": null,
+        "solve_large_enabled": true,
+        "solve_medium_enabled": false,
+        "solve_small_enabled": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    },
+    {
+      "test_id": "edge_020",
+      "category": "real_world",
+      "description": "실제 사용자가 입력할 만한 자연스러운 표현",
+      "input": "아늑한 침실을 만들어줘. 침대와 옷장이 있고, 창가에 책상이 있으면 좋겠어. 최대 2개 방으로 해줘.",
+      "passed": false,
+      "issues": [
+        "restrict_parent_rooms: restrict_parent_rooms: Extra items {'Closet'}"
+      ],
+      "warnings": [],
+      "validation_passed": true,
+      "field_accuracy": {
+        "restrict_parent_rooms": false,
+        "restrict_child_primary": true,
+        "solve_max_rooms": true
+      },
+      "reclassification_detected": false,
+      "stage_consistency": true,
+      "actual_parsed": {
+        "restrict_parent_rooms": null,
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage",
+          "Desk"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 2,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "stage_types": {
+          "on_floor_and_wall": true,
+          "on_floor_freestanding": true,
+          "on_wall": true,
+          "on_ceiling": false,
+          "side_obj": false,
+          "obj_ontop_obj": true,
+          "obj_on_support": true
+        },
+        "stage_exclusive": false,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      },
+      "actual_post_processed": {
+        "restrict_parent_rooms": [
+          "Bedroom",
+          "Closet"
+        ],
+        "restrict_parent_objs": null,
+        "restrict_child_primary": [
+          "Bed",
+          "Storage",
+          "Desk"
+        ],
+        "restrict_child_secondary": null,
+        "solve_max_rooms": 2,
+        "solve_max_parent_obj": null,
+        "consgraph_filters": null,
+        "solve_steps": {
+          "large": 200,
+          "medium": 100,
+          "small": 30
+        },
+        "solve_large_enabled": true,
+        "solve_medium_enabled": true,
+        "solve_small_enabled": true,
+        "terrain_enabled": false,
+        "topview": false,
+        "animate_cameras_enabled": false,
+        "floating_objs_enabled": false,
+        "restrict_single_supported_roomtype": false
+      }
+    }
+  ]
+}

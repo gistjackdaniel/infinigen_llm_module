@@ -1,0 +1,26 @@
+include 'infinigen_examples/configs_indoor/base_indoors.gin'
+
+# restrict_solving parameters
+restrict_solving.restrict_parent_rooms = ['Kitchen']
+restrict_solving.restrict_parent_objs = ['KitchenCounter']
+restrict_solving.restrict_child_primary = ['KitchenCounter', 'KitchenAppliance']
+restrict_solving.restrict_child_secondary = ['Cookware', 'Sink']
+restrict_solving.solve_max_rooms = 1
+restrict_solving.consgraph_filters = ['fullness', 'furniture', 'kitchen', 'kitchen_appliance', 'kitchen_counter', 'kitchen_island', 'kitchen_objects', 'kitchen_sink', 'node']
+
+# compose_indoors parameters
+compose_indoors.solve_large_enabled = True
+compose_indoors.solve_medium_enabled = True
+compose_indoors.solve_small_enabled = True
+compose_indoors.terrain_enabled = False
+compose_indoors.topview = False
+compose_indoors.animate_cameras_enabled = False
+compose_indoors.floating_objs_enabled = False
+compose_indoors.restrict_single_supported_roomtype = False
+
+# Single-room configuration
+BlueprintSolidifier.enable_open = False
+
+# Hide non-solved rooms for cleaner output
+compose_indoors.hide_other_rooms_enabled = True
+compose_indoors.invisible_room_ceilings_enabled = True

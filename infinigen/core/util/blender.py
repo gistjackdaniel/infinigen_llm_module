@@ -11,10 +11,8 @@ from math import prod
 from pathlib import Path
 
 # ruff: noqa: I001
-# must import bpy before bmesh
-import bpy
+# bpy and bmesh are imported lazily to allow this module to be imported outside of Blender
 import gin
-import bmesh
 import mathutils
 import numpy as np
 import trimesh
@@ -27,6 +25,41 @@ from . import math as mutil
 from .logging import Suppress
 
 logger = logging.getLogger(__name__)
+
+# Lazy import of bpy and bmesh - import them when first needed
+_bpy = None
+_bmesh = None
+
+
+def _get_bpy():
+    global _bpy
+    if _bpy is None:
+        import bpy  # noqa: I001
+
+        # must import bpy before bmesh
+        _bpy = bpy
+    return _bpy
+
+
+def _get_bmesh():
+    global _bmesh
+    if _bmesh is None:
+        import bmesh  # noqa: I001
+
+        _bmesh = bmesh
+    return _bmesh
+
+
+# Create a proxy object for bpy that lazily imports
+class _BpyProxy:
+    def __getattr__(self, name):
+        return getattr(_get_bpy(), name)
+
+    def __getitem__(self, key):
+        return _get_bpy()[key]
+
+
+bpy = _BpyProxy()
 
 
 @gin.configurable("geometry")
@@ -518,6 +551,7 @@ def spawn_capsule(rad, height, us=32, vs=16):
     obj = bpy.data.objects.new("Capsule", mesh)
     bpy.context.collection.objects.link(obj)
 
+    bmesh = _get_bmesh()
     bm = bmesh.new()
     bmesh.ops.create_uvsphere(bm, u_segments=us, v_segments=vs, radius=rad)
 
@@ -970,6 +1004,7 @@ def apply_matrix_world(obj, verts: np.array):
 
 
 def surface_area(obj: bpy.types.Object):
+    bmesh = _get_bmesh()
     bm = bmesh.new()
     bm.from_mesh(obj.data)
     area = sum(f.calc_area() for f in bm.faces)

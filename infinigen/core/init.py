@@ -8,17 +8,16 @@ import random
 import sys
 from pathlib import Path
 
-import bpy
-
 # ruff: noqa: E402
 os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"  # This must be done BEFORE import cv2.
 # See https://github.com/opencv/opencv/issues/21326#issuecomment-1008517425
 
-import addon_utils
 import gin
 import numpy as np
 from numpy.random import randint
 
+# bpy and addon_utils are imported lazily in functions that need them
+# to allow this module to be imported outside of Blender (e.g., for config generation)
 import infinigen
 from infinigen.core.util.logging import LogLevel
 from infinigen.core.util.math import int_hash
@@ -208,6 +207,8 @@ def configure_render_cycles(
     exposure,
     denoise,
 ):
+    import bpy  # Lazy import to allow module import outside Blender
+
     bpy.context.scene.render.engine = "CYCLES"
 
     # For now, denoiser is always turned on, but the  _used_
@@ -239,6 +240,8 @@ def configure_render_cycles(
 
 @gin.configurable
 def configure_cycles_devices(use_gpu=True):
+    import bpy  # Lazy import to allow module import outside Blender
+
     if use_gpu is False:
         logger.info(f"Job will use CPU-only due to {use_gpu=}")
         bpy.context.scene.cycles.device = "CPU"
@@ -281,6 +284,9 @@ def configure_cycles_devices(use_gpu=True):
 
 
 def require_blender_addon(addon: str, fail: str = "fatal", allow_online=False):
+    import addon_utils  # Lazy import to allow module import outside Blender
+    import bpy  # Lazy import to allow module import outside Blender
+
     def report_fail(msg):
         if fail == "warn":
             logger.warning(
@@ -339,6 +345,8 @@ def configure_blender(
     motion_blur=False,
     motion_blur_shutter=0.5,
 ):
+    import bpy  # Lazy import to allow module import outside Blender
+
     bpy.context.preferences.system.scrollback = 0
     bpy.context.preferences.edit.undo_steps = 0
 

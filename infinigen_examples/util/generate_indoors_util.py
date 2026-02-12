@@ -246,23 +246,48 @@ def restrict_solving(
         restrict_child_primary = t.to_tag_set(
             restrict_child_primary, fac_context=usage_lookup._factory_lookup
         )
-        for k, d in stages.items():
-            if d.intersects(primary_obj_domain):
-                logger.info(
-                    f"restrict_solving applying restrict_child_primary, limiting {k} to objects satisfying {restrict_child_primary}"
-                )
-                stages[k] = d.intersection(r.Domain(restrict_child_primary))
+        pos_tags = {
+            tag for tag in restrict_child_primary if not isinstance(tag, t.Negated)
+        }
+        if len(pos_tags) == 1:
+            # Single tag: intersection works correctly
+            for k, d in stages.items():
+                if d.intersects(primary_obj_domain):
+                    logger.info(
+                        f"restrict_solving applying restrict_child_primary, limiting {k} to objects satisfying {restrict_child_primary}"
+                    )
+                    stages[k] = d.intersection(r.Domain(restrict_child_primary))
+        else:
+            # Multiple tags: Domain intersection creates AND (requires ALL tags),
+            # which no single object satisfies. Negation also fails due to
+            # hierarchical tags (e.g. Bed is also Furniture).
+            # Following HelloRoom.md pattern: don't restrict stages here.
+            # Use consgraph_filters (set in gin config) to control which
+            # constraints/bounds the solver uses, achieving per-type placement.
+            logger.info(
+                f"restrict_solving: restrict_child_primary has multiple tags {pos_tags}; "
+                f"skipping stage restriction (use consgraph_filters for filtering)"
+            )
 
     if restrict_child_secondary is not None:
         restrict_child_secondary = t.to_tag_set(
             restrict_child_secondary, fac_context=usage_lookup._factory_lookup
         )
-        for k, d in stages.items():
-            if d.intersects(secondary_obj_domain):
-                logger.info(
-                    f"restrict_solving applying restrict_child_secondary, limiting {k} to objects satisfying {restrict_child_primary}"
-                )
-                stages[k] = d.intersection(r.Domain(restrict_child_secondary))
+        pos_tags_sec = {
+            tag for tag in restrict_child_secondary if not isinstance(tag, t.Negated)
+        }
+        if len(pos_tags_sec) == 1:
+            for k, d in stages.items():
+                if d.intersects(secondary_obj_domain):
+                    logger.info(
+                        f"restrict_solving applying restrict_child_secondary, limiting {k} to objects satisfying {restrict_child_secondary}"
+                    )
+                    stages[k] = d.intersection(r.Domain(restrict_child_secondary))
+        else:
+            logger.info(
+                f"restrict_solving: restrict_child_secondary has multiple tags {pos_tags_sec}; "
+                f"skipping stage restriction (use consgraph_filters for filtering)"
+            )
 
     quantity_limits = {
         cu.variable_room: solve_max_rooms,

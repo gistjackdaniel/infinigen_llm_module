@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "numpy", "Cython"]
+requires = ["setuptools>=64.0", "wheel", "numpy", "Cython"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -83,6 +83,9 @@ sim = [
 ]
 wandb = [
     "wandb"
+]
+nlp = [
+    "ollama"
 ]
 
 [tool.setuptools]

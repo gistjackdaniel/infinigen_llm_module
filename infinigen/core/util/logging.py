@@ -15,8 +15,10 @@ import typing
 from datetime import datetime
 from pathlib import Path
 
-import bpy
 import gin
+
+# bpy is imported lazily in functions that need it
+# to allow this module to be imported outside of Blender
 
 timer_results = logging.getLogger("times")
 
@@ -86,6 +88,8 @@ class LogLevel:
 
 
 def save_polycounts(file):
+    import bpy  # Lazy import to allow module import outside Blender
+
     for col in bpy.data.collections:
         polycount = sum(
             len(obj.data.polygons)

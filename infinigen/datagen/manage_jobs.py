@@ -259,25 +259,24 @@ def init_db_from_existing(output_folder: Path):
 def _sample_config_distribution(
     i: int, config_distribution: list[tuple[str, float]], config_sample_mode: str
 ):
-    match config_sample_mode:
-        case "random":
-            configs_options, weights = zip(
-                *config_distribution
-            )  # list of rows to list per column
-            ps = np.array(weights) / sum(weights)
-            return np.random.choice(configs_options, p=ps)
-        case "roundrobin":
-            configs_options, weights = zip(
-                *config_distribution
-            )  # list of rows to list per column
-            if not all(isinstance(w, int) for w in weights):
-                raise ValueError(
-                    f"{config_sample_mode=} expects integer scene counts as weights but got {weights=} with non-integer values"
-                )
-            idx = np.argmin(i % sum(weights) + 1 > np.cumsum(weights))
-            return configs_options[idx]
-        case _:
-            raise ValueError(f"Unrecognized {config_sample_mode=}")
+    if config_sample_mode == "random":
+        configs_options, weights = zip(
+            *config_distribution
+        )  # list of rows to list per column
+        ps = np.array(weights) / sum(weights)
+        return np.random.choice(configs_options, p=ps)
+    elif config_sample_mode == "roundrobin":
+        configs_options, weights = zip(
+            *config_distribution
+        )  # list of rows to list per column
+        if not all(isinstance(w, int) for w in weights):
+            raise ValueError(
+                f"{config_sample_mode=} expects integer scene counts as weights but got {weights=} with non-integer values"
+            )
+        idx = np.argmin(i % sum(weights) + 1 > np.cumsum(weights))
+        return configs_options[idx]
+    else:
+        raise ValueError(f"Unrecognized {config_sample_mode=}")
 
 
 @gin.configurable
@@ -935,15 +934,37 @@ if __name__ == "__main__":
 
     assert args.specific_seed is None or args.num_scenes == 1
 
+    # 외부 SSD 경로를 환경 변수로 지정 가능 (예: export INFINIGEN_OUTPUT_BASE=/mnt/external_ssd)
+    # 또는 현재 작업 디렉토리가 외부 SSD 경로에 있으면 자동으로 그 경로의 outputs를 사용
+    if "INFINIGEN_OUTPUT_BASE" in os.environ:
+        output_base = Path(os.environ.get("INFINIGEN_OUTPUT_BASE"))
+    else:
+        # 현재 작업 디렉토리 확인
+        cwd = Path.cwd()
+        # 외부 SSD 경로 패턴 확인 (/media/...)
+        if "/media/" in str(cwd):
+            output_base = cwd / "outputs"
+        else:
+            output_base = Path("outputs")
+
+    output_base.mkdir(parents=True, exist_ok=True)
+    assert output_base.exists(), output_base
+
     if args.output_folder is None:
         date_str = datetime.now().strftime("%y-%m-%d_%H-%M-%S")
         hostname = os.uname().nodename
+        args.output_folder = output_base / f"{date_str}_{hostname}"
+    else:
+        # --output_folder가 지정된 경우, 상대 경로이면 output_base 기준으로 해석
+        output_folder_path = Path(args.output_folder)
+        if not output_folder_path.is_absolute():
+            # 상대 경로인 경우 output_base 기준으로 해석
+            args.output_folder = output_base / output_folder_path
+        else:
+            # 절대 경로인 경우 그대로 사용
+            args.output_folder = output_folder_path
 
-        output_base = Path("outputs")
-        assert output_base.exists(), output_base
-
-        args.output_folder = Path(f"outputs/{date_str}_{hostname}")
-    elif os.environ.get("SLURM_ARRAY_TASK_ID") is not None:
+    if os.environ.get("SLURM_ARRAY_TASK_ID") is not None:
         args.output_folder = Path(
             (str(args.output_folder) + "_" + str(os.environ["SLURM_ARRAY_TASK_ID"]))
         )

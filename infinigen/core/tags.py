@@ -74,7 +74,7 @@ class Semantics(EnumTag):
 
     # Furniture functions
     Storage = "storage"
-    Seating = "seating"
+    Seating = "seatng"
     LoungeSeating = "lounge-seating"
     Table = "table"
     Bathing = "bathing"
@@ -215,11 +215,10 @@ def decompose_tags(tags: set[Tag]):
     positive, negative = set(), set()
 
     for t in tags:
-        match t:
-            case Negated(tag):
-                negative.add(tag)
-            case _:
-                positive.add(t)
+        if isinstance(t, Negated):
+            negative.add(t.tag)
+        else:
+            positive.add(t)
 
     return positive, negative
 
@@ -309,24 +308,116 @@ def to_string(tag: Tag | str):
     if isinstance(tag, str):
         return tag
 
-    match tag:
-        case Semantics() | Subpart():
-            return tag.value
-        case StringTag():
-            return tag.desc
-        case FromGenerator():
-            return tag.__name__
-        case Negated():
-            raise ValueError(f"Negated tag {tag=} is not allowed here")
-        case _:
-            raise ValueError(f"to_string unhandled {tag=}")
+    if isinstance(tag, Semantics) or isinstance(tag, Subpart):
+        return tag.value
+    elif isinstance(tag, StringTag):
+        return tag.desc
+    elif isinstance(tag, FromGenerator):
+        return tag.__name__
+    elif isinstance(tag, Negated):
+        raise ValueError(f"Negated tag {tag=} is not allowed here")
+    else:
+        raise ValueError(f"to_string unhandled {tag=}")
 
 
 def to_tag_set(x, fac_context=None):
-    match x:
-        case None:
-            return set()
-        case set() | list() | tuple() | frozenset():
-            return {to_tag(xi, fac_context=fac_context) for xi in x}
-        case x:
-            return {to_tag(x, fac_context=fac_context)}
+    if x is None:
+        return set()
+    elif isinstance(x, (set, list, tuple, frozenset)):
+        return {to_tag(xi, fac_context=fac_context) for xi in x}
+    else:
+        return {to_tag(x, fac_context=fac_context)}
+
+
+def get_room_types():
+    """Get all room-related Semantics tags.
+
+    Returns:
+        List of room type Semantics tags, sorted by name
+    """
+    room_types = {
+        Semantics.Kitchen,
+        Semantics.Bedroom,
+        Semantics.LivingRoom,
+        Semantics.Closet,
+        Semantics.Hallway,
+        Semantics.Bathroom,
+        Semantics.Garage,
+        Semantics.Balcony,
+        Semantics.DiningRoom,
+        Semantics.Utility,
+        Semantics.StaircaseRoom,
+        Semantics.Warehouse,
+        Semantics.Office,
+        Semantics.MeetingRoom,
+        Semantics.OpenOffice,
+        Semantics.BreakRoom,
+        Semantics.Restroom,
+        Semantics.FactoryOffice,
+    }
+    return sorted(room_types, key=lambda x: x.name)
+
+
+def get_object_types():
+    """Get all object-related Semantics tags (excluding room types, structural types, and solver flags).
+
+    Returns:
+        List of object type Semantics tags, sorted by name
+    """
+    # Room types
+    room_types = {
+        Semantics.Kitchen,
+        Semantics.Bedroom,
+        Semantics.LivingRoom,
+        Semantics.Closet,
+        Semantics.Hallway,
+        Semantics.Bathroom,
+        Semantics.Garage,
+        Semantics.Balcony,
+        Semantics.DiningRoom,
+        Semantics.Utility,
+        Semantics.StaircaseRoom,
+        Semantics.Warehouse,
+        Semantics.Office,
+        Semantics.MeetingRoom,
+        Semantics.OpenOffice,
+        Semantics.BreakRoom,
+        Semantics.Restroom,
+        Semantics.FactoryOffice,
+    }
+
+    # Structural/system types (not objects)
+    structural_types = {
+        Semantics.Root,
+        Semantics.New,
+        Semantics.RoomNode,
+        Semantics.GroundFloor,
+        Semantics.SecondFloor,
+        Semantics.ThirdFloor,
+        Semantics.Exterior,
+        Semantics.Staircase,
+        Semantics.Visited,
+        Semantics.RoomContour,
+        Semantics.Room,
+        Semantics.Object,
+        Semantics.Cutter,
+    }
+
+    # Solver feature flags (not object types)
+    solver_flags = {
+        Semantics.RealPlaceholder,
+        Semantics.OversizePlaceholder,
+        Semantics.AssetAsPlaceholder,
+        Semantics.AssetPlaceholderForChildren,
+        Semantics.PlaceholderBBox,
+        Semantics.SingleGenerator,
+        Semantics.NoRotation,
+        Semantics.NoCollision,
+        Semantics.NoChildren,
+    }
+
+    all_semantics = set(Semantics)
+    exclude_types = room_types | structural_types | solver_flags
+    object_types = all_semantics - exclude_types
+
+    return sorted(object_types, key=lambda x: x.name)

@@ -1,0 +1,24 @@
+include 'infinigen_examples/configs_indoor/base_indoors.gin'
+
+# restrict_solving parameters
+restrict_solving.restrict_parent_rooms = ['Bedroom']
+restrict_solving.restrict_child_primary = ['Bed', 'Storage']
+restrict_solving.solve_max_rooms = 1
+restrict_solving.consgraph_filters = ['bedroom', 'closets', 'fullness', 'furniture', 'node', 'storage']
+
+# compose_indoors parameters
+compose_indoors.solve_large_enabled = True
+compose_indoors.solve_medium_enabled = True
+compose_indoors.solve_small_enabled = True
+compose_indoors.terrain_enabled = False
+compose_indoors.topview = False
+compose_indoors.animate_cameras_enabled = False
+compose_indoors.floating_objs_enabled = False
+compose_indoors.restrict_single_supported_roomtype = False
+
+# Single-room configuration
+BlueprintSolidifier.enable_open = False
+
+# Hide non-solved rooms for cleaner output
+compose_indoors.hide_other_rooms_enabled = True
+compose_indoors.invisible_room_ceilings_enabled = True
