@@ -224,7 +224,7 @@ def room_walls(walls: list[bpy.types.Object], constants: RoomConstants, n_walls=
             if wall_fn.__class__.__name__ == "Plaster":
                 for r in rooms__:
                     unwrap_normal(r, selection=None)
-            if wall_fn.__class__.__name__ == "Brick":
+            if wall_fn.__class__.__name__ in ("Brick", "Concrete"):
                 kwargs = {}
             surface.assign_material(rooms__, wall_fn(**kwargs))
 

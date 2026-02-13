@@ -6,7 +6,7 @@ restrict_solving.restrict_parent_objs = ['Bed', 'Table', 'SideTable']
 restrict_solving.restrict_child_primary = ['Bed', 'Table', 'SideTable']
 restrict_solving.restrict_child_secondary = ['Lighting']
 restrict_solving.solve_max_rooms = 1
-restrict_solving.consgraph_filters = ['bedroom', 'fullness', 'furniture', 'lamps', 'lighting', 'node', 'sidetable']
+restrict_solving.consgraph_filters = ['bedroom', 'ceiling_light', 'dining_chair', 'dining_table', 'fullness', 'furniture', 'lamps', 'lighting', 'node', 'sidetable']
 
 # compose_indoors parameters
 compose_indoors.solve_large_enabled = True

@@ -215,11 +215,6 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
             stages["on_floor_freestanding"], state, [cu.variable_room], limits
         )
     ]
-    solved_bound_points = np.concatenate([butil.bounds(r) for r in solved_rooms])
-    solved_bbox = (
-        np.min(solved_bound_points, axis=0),
-        np.max(solved_bound_points, axis=0),
-    )
 
     house_bbox = np.concatenate(
         [
@@ -229,13 +224,26 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
     )
     house_bbox = (np.min(house_bbox, axis=0), np.max(house_bbox, axis=0))
 
+    if solved_rooms:
+        solved_bound_points = np.concatenate([butil.bounds(r) for r in solved_rooms])
+        solved_bbox = (
+            np.min(solved_bound_points, axis=0),
+            np.max(solved_bound_points, axis=0),
+        )
+    else:
+        logger.warning("No solved rooms found, falling back to house_bbox")
+        solved_bbox = house_bbox
+
     camera_rigs = placement.camera.spawn_camera_rigs()
 
     nonroom_objs = [
         o.obj for o in state.objs.values() if t.Semantics.Room not in o.tags
     ]
     room_objs = [o.obj for o in state.objs.values() if t.Semantics.Room in o.tags]
-    scene_objs = solved_rooms + nonroom_objs
+
+    # If solved_rooms is empty, fall back to all room objects for camera placement
+    camera_rooms = solved_rooms if solved_rooms else room_objs
+    scene_objs = camera_rooms + nonroom_objs
 
     def pose_cameras():
         scene_preprocessed = placement.camera.camera_selection_preprocessing(
@@ -245,7 +253,7 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
         solved_floor_surface = butil.join_objects(
             [
                 tagging.extract_tagged_faces(o, {t.Subpart.SupportSurface})
-                for o in solved_rooms
+                for o in camera_rooms
             ]
         )
 

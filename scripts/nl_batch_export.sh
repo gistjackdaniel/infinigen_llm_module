@@ -112,9 +112,9 @@ for SCENE_PATH in "${SCENE_DIRS[@]}"; do
     echo "  Input: ${SCENE_PATH}"
     echo "  Export to: ${EXPORT_SCENE_DIR}"
 
-    # coarse 폴더가 없으면 건너뛰기
-    if [[ ! -d "${SCENE_PATH}/coarse" ]]; then
-        echo "  >> SKIP: coarse 폴더가 없습니다 (씬이 생성되지 않음)."
+    # scene.blend가 없으면 건너뛰기
+    if [[ ! -f "${SCENE_PATH}/scene.blend" ]]; then
+        echo "  >> SKIP: scene.blend가 없습니다 (씬이 생성되지 않음)."
         SKIPPED+=("${SCENE_NAME}")
         continue
     fi

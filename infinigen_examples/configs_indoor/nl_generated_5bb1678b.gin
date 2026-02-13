@@ -1,10 +1,12 @@
 include 'infinigen_examples/configs_indoor/base_indoors.gin'
 
 # restrict_solving parameters
-restrict_solving.restrict_parent_rooms = ['Bedroom']
-restrict_solving.restrict_child_primary = ['Bed', 'Storage']
+restrict_solving.restrict_parent_rooms = ['Kitchen']
+restrict_solving.restrict_parent_objs = ['KitchenCounter', 'Table']
+restrict_solving.restrict_child_primary = ['KitchenCounter', 'Table']
+restrict_solving.restrict_child_secondary = ['Cookware', 'Dishware', 'Sink', 'KitchenCounterItem']
 restrict_solving.solve_max_rooms = 1
-restrict_solving.consgraph_filters = ['bedroom', 'fullness', 'furniture', 'node', 'storage']
+restrict_solving.consgraph_filters = ['dining_chair', 'dining_table', 'fullness', 'furniture', 'kitchen', 'kitchen_counter', 'kitchen_island', 'kitchen_objects', 'kitchen_sink', 'node']
 
 # compose_indoors parameters
 compose_indoors.solve_large_enabled = True

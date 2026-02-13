@@ -125,9 +125,9 @@ for entry in "${SCENES[@]}"; do
     echo "  Output: ${SCENE_DIR}"
     echo "  Log: ${LOG_FILE}"
 
-    # 이미 생성된 씬은 건너뛰기 (coarse 폴더가 있으면)
-    if [[ -d "${SCENE_DIR}" && -d "${SCENE_DIR}/coarse" ]]; then
-        echo "  >> SKIP: 이미 생성된 씬입니다."
+    # 이미 생성된 씬은 건너뛰기 (scene.blend 파일이 있으면)
+    if [[ -f "${SCENE_DIR}/scene.blend" ]]; then
+        echo "  >> SKIP: 이미 생성된 씬입니다. (scene.blend 존재)"
         SKIPPED+=("${SCENE_NAME}")
         continue
     fi

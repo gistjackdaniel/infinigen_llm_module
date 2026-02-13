@@ -4,7 +4,7 @@ include 'infinigen_examples/configs_indoor/base_indoors.gin'
 restrict_solving.restrict_parent_rooms = ['Bedroom']
 restrict_solving.restrict_child_primary = ['Bed', 'Storage', 'CeilingLight']
 restrict_solving.solve_max_rooms = 1
-restrict_solving.consgraph_filters = ['bedroom', 'ceiling_light', 'closets', 'fullness', 'furniture', 'node', 'storage']
+restrict_solving.consgraph_filters = ['bedroom', 'ceiling_light', 'fullness', 'furniture', 'node', 'storage']
 
 # compose_indoors parameters
 compose_indoors.solve_large_enabled = True

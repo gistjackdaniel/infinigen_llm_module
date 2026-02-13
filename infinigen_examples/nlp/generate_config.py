@@ -13,50 +13,127 @@ logger = logging.getLogger(__name__)
 # Mapping from Semantics tag names to relevant constraint graph filter keywords.
 # These keywords match the keys used in home_furniture_constraints() in
 # infinigen_examples/constraints/home.py (constraints["..."] and score_terms["..."]).
+#
+# consgraph_filters uses SUBSTRING MATCH:  any(fi in key for fi in filters)
+# e.g. "kitchen" matches "kitchen_counters", "kitchen_sink", "kitchen_appliance", etc.
+#      "dining_chair" matches "dining_chairs"
+#      "sofa" matches "sofa", "sofa_positioning"
+#
 # When specific objects are requested, we include their related constraint filters
 # so the solver has the right bounds to place those objects.
+#
+# All constraint/score_term keys in home.py (for reference):
+#   node_gen, node, room,
+#   furniture_fullness, obj_in_obj_fullness, obj_ontop_storage_fullness,
+#   obj_ontop_nonstorage_fullness, furniture_aesthetics,
+#   storage, portal_accessibility,
+#   rugs, wall_decorations, floor_covering,
+#   plants,
+#   desk,
+#   lighting, ceiling_lights, lamps,
+#   sidetable_objects, sidetable,
+#   closets,
+#   bedroom,
+#   kitchen_counters, kitchen_barchairs, kitchen_island_placement,
+#   kitchen_sink, kitchen_appliance, kitchen_objects, closet_kitchen,
+#   sofa, sofa_positioning, tv, tvstand, livingroom, livingroom_objects,
+#   dining_chairs, dining_table_objects, diningroom,
+#   bathroom, toilet, bathtub,
+#   aquarium_tank, birthday_balloons, cocktail_tables
 TAG_TO_CONSGRAPH_FILTERS = {
-    # Bedroom objects
-    "Bed": ["bedroom"],
-    # Storage is used across many rooms
-    "Storage": ["storage", "closets"],
-    # Kitchen objects
+    # ── Primary furniture / large objects ────────────────────────────
+    # Bed bounds are in constraints["bedroom"] → comes from ROOM mapping.
+    "Bed": [],
+    # Storage: constraints["storage"] → storage_freestanding count/accessibility
+    "Storage": ["storage"],
+    # Furniture (generic): already in BASE_CONSGRAPH_FILTERS ("furniture")
+    "Furniture": [],
+    # ── Kitchen objects ─────────────────────────────────────────────
+    # KitchenCounter: constraints["kitchen_counters"], ["kitchen_island_placement"]
     "KitchenCounter": ["kitchen_counter", "kitchen_island"],
+    # Sink: constraints["kitchen_sink"] (bathroom sink is in Room→"bathroom")
     "Sink": ["kitchen_sink"],
+    # KitchenAppliance: constraints["kitchen_appliance"]
     "KitchenAppliance": ["kitchen_appliance"],
-    # Living room objects
-    "Seating": ["sofa", "livingroom"],
-    "LoungeSeating": ["sofa", "livingroom"],
-    "Watchable": ["tv", "tvstand"],
-    # Dining/office
-    "Table": ["furniture"],
+    # ── Seating ─────────────────────────────────────────────────────
+    # Seating (generic): sofa + dining chair + office chair constraints
+    "Seating": ["sofa", "dining_chair"],
+    # LoungeSeating/Sofa: constraints["sofa"], ["sofa_positioning"]
+    "LoungeSeating": ["sofa"],
+    # Chair: constraints["dining_chairs"], also in ["desk"] (OfficeChairFactory)
+    "Chair": ["dining_chair", "desk"],
+    # ── Tables ──────────────────────────────────────────────────────
+    # Table: constraints["dining_chairs"] (dining table bounds),
+    #        constraints["dining_table_objects"] (items on table)
+    "Table": ["dining_chair", "dining_table"],
+    # Desk: constraints["desk"] → desk + office chair + monitor
     "Desk": ["desk"],
-    "Chair": ["furniture"],
+    # SideTable: score_terms["sidetable"], constraints["sidetable_objects"]
     "SideTable": ["sidetable"],
-    # Decorations and lighting
+    # ── Media ───────────────────────────────────────────────────────
+    # Watchable/TV: constraints["tv"], score_terms["tvstand"]
+    "Watchable": ["tv", "tvstand"],
+    # ── Decorations & floor ─────────────────────────────────────────
+    # WallDecoration: constraints["wall_decorations"]
     "WallDecoration": ["wall_decoration"],
+    # FloorMat/Rug: constraints["rugs"], score_terms["floor_covering"]
+    "FloorMat": ["rugs", "floor_covering"],
+    # ── Lighting ────────────────────────────────────────────────────
+    # CeilingLight: constraints["ceiling_lights"]
     "CeilingLight": ["ceiling_light"],
-    "Lighting": ["lighting", "lamps"],
-    # Items placed on surfaces
-    "Dishware": ["kitchen_objects"],
+    # Lighting (generic): constraints["lighting"], ["lamps"], ["ceiling_lights"]
+    "Lighting": ["lighting", "lamps", "ceiling_light"],
+    # ── Items placed on surfaces ────────────────────────────────────
+    # Dishware: constraints["kitchen_objects"], ["dining_table_objects"]
+    "Dishware": ["kitchen_objects", "dining_table"],
+    # Cookware: constraints["kitchen_objects"]
     "Cookware": ["kitchen_objects"],
-    "Utensils": ["kitchen_objects"],
-    "OfficeShelfItem": ["bedroom", "closets"],
+    # Utensils: constraints["dining_table_objects"]
+    "Utensils": ["dining_table"],
+    # OfficeShelfItem: constraints["desk"], ["sidetable_objects"]
+    #   (room-scoped appearances come from ROOM mapping)
+    "OfficeShelfItem": ["desk", "sidetable"],
+    # KitchenCounterItem: constraints["kitchen_objects"]
     "KitchenCounterItem": ["kitchen_objects"],
-    "TableDisplayItem": ["sidetable_objects"],
+    # TableDisplayItem: constraints["kitchen_objects"], ["dining_table_objects"],
+    #   ["sidetable_objects"]
+    "TableDisplayItem": ["kitchen_objects", "dining_table", "sidetable"],
+    # BathroomItem: bounds are in constraints["bathroom"] → comes from ROOM mapping
     "BathroomItem": [],
-    "FoodPantryItem": ["closet_kitchen"],
-    "Furniture": ["furniture"],
+    # FoodPantryItem: constraints["kitchen_objects"], ["closet_kitchen"]
+    "FoodPantryItem": ["kitchen_objects", "closet_kitchen"],
+    # ShelfTrinket: no dedicated constraint key; general obj_on_support
+    "ShelfTrinket": [],
+    # ClothDrapeItem: no dedicated constraint key
+    "ClothDrapeItem": [],
+    # HandheldItem: no dedicated constraint key
+    "HandheldItem": [],
+    # ── Bathroom objects ────────────────────────────────────────────
+    # Bathing/Bathtub: constraints["bathtub"]
+    "Bathing": ["bathtub"],
+    # ── Plants ──────────────────────────────────────────────────────
+    "Plants": ["plants"],
 }
 
-# Room-type to constraint filter mapping
+# Room-type to constraint filter mapping.
+# Maps rooms ONLY to room-level constraint bundle keys.
+# Object-specific keys (sofa, tv, desk, etc.) come from TAG_TO_CONSGRAPH_FILTERS.
+# auto_generate_consgraph_filters() combines both.
 ROOM_TO_CONSGRAPH_FILTERS = {
     "Bedroom": ["bedroom"],
     "Kitchen": ["kitchen"],
-    "LivingRoom": ["livingroom", "sofa", "tv"],
-    "DiningRoom": ["furniture"],
-    "Bathroom": [],
-    "Office": ["desk"],
+    "LivingRoom": ["livingroom"],
+    "DiningRoom": ["diningroom"],
+    "Bathroom": ["bathroom"],
+    "Closet": ["closet"],
+    "Office": [],
+    "Hallway": [],
+    "Garage": [],
+    "Balcony": [],
+    "Utility": [],
+    "StaircaseRoom": [],
+    "MeetingRoom": [],
+    "BreakRoom": [],
 }
 
 # Base filters always included for fundamental constraint satisfaction
